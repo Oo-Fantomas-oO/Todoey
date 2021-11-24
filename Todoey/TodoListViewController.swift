@@ -9,12 +9,21 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    let itemArray = ["Item 1", "Item 2", "Item 3"]
+    var itemArray = ["Item 1", "Item 2", "Item 3"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Todoey"
+        customizeAppearance()
+        customizeRightBarButton()
         
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+    }
+    
+    //MARK: - Func
+    
+    fileprivate func customizeAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .systemBlue
@@ -22,9 +31,26 @@ class TodoListViewController: UITableViewController {
         navigationController?.navigationBar.barTintColor = .systemBlue
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
+    }
+    
+    func customizeRightBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+        navigationItem.rightBarButtonItem?.tintColor = .white
+    }
+    
+    @objc fileprivate func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add new Todoey Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 
     //MARK: - Tableview Datasourse Methods
