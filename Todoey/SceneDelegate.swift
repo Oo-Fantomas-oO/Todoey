@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navVC = UINavigationController(rootViewController: TodoListViewController())
+        let navVC = UINavigationController(rootViewController: CategoryTableViewController())
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
     }

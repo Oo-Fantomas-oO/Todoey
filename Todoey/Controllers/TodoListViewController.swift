@@ -30,7 +30,7 @@ class TodoListViewController: UITableViewController {
     //MARK: - Func
     
     fileprivate func customizeAppearance() {
-        title = "Todoey"
+        title = "Items"
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .systemBlue
@@ -130,4 +130,13 @@ extension TodoListViewController: UISearchBarDelegate {
         loadItems(with: request)
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
 }
