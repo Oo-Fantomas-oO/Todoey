@@ -29,9 +29,9 @@ class CategoryTableViewController: UITableViewController {
         title = "Todoey"
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .systemBlue
+        appearance.backgroundColor = .systemMint
 
-        navigationController?.navigationBar.barTintColor = .systemBlue
+        navigationController?.navigationBar.barTintColor = .systemMint
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -82,9 +82,12 @@ class CategoryTableViewController: UITableViewController {
     //MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categoryArray[indexPath.row].done = !categoryArray[indexPath.row].done
-        saveItems()
-        tableView.deselectRow(at: indexPath, animated: true)
+        let destinationVC = TodoListViewController()
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categoryArray[indexPath.row]
+        }
+        navigationController?.modalTransitionStyle = .flipHorizontal
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     //MARK: - Data Manipulation Methods
